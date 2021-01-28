@@ -1,0 +1,6 @@
+* Materia retro queries
+This repository collects the various queries agains the Ethereum ETL tables using Google Big Query and their result.
+There are also the scripts used to get this, to encourage third party audits.
+
+* Usage
+Before launching che script is necessary to set the ~GOOGLE_APPLICATION_CREDENTIALS~ environment variable.
