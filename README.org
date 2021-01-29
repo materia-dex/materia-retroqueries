@@ -4,3 +4,7 @@ There are also the scripts used to get this, to encourage third party audits.
 
 * Usage
 Before launching che script is necessary to set the ~GOOGLE_APPLICATION_CREDENTIALS~ environment variable.
+
+#+begin_src sh
+python scripts/buidl_holders.py
+#+end_src
