@@ -1,10 +1,72 @@
 * Materia retro queries
-This repository collects the various queries agains the Ethereum ETL tables using Google Big Query and their result.
-There are also the scripts used to get this, to encourage third party audits.
+  
+  This repository collects different scripts to perform queries against
+  the Ethereum ETL tables using Google Big Query and perform simple
+  processing to the results.  
+  
+  The ~results/~ folder contains the outputs, the scripts and the
+  queries are as simple and short as possible to encourage third party
+  audits.
+  To test all the scripts you are required to export the
+  ~GOOGLE_APPLICATION_CREDENTIALS~ environment variable.
+  
+* Scripts
+  
+  Before all, install the requirements with ~pip install -r
+  requirements.txt~.
+  
+** Verify current holders
 
-* Usage
-Before launching che script is necessary to set the ~GOOGLE_APPLICATION_CREDENTIALS~ environment variable.
+   Since one cannot simply query all the existing Ethereum addresses
+   checking for their balance the only way to find out the holdings of
+   a specific token is retrace over the entire transactions history.
 
-#+begin_src sh
-python scripts/buidl_holders.py
-#+end_src
+   This can achived with this simple algorithm:
+
+   #+begin_src python
+     for row in client.query(query):
+	 src, dst, val = row['from_address'], row['to_address'], int(row['value'])
+
+	  if not src in holders: holders[src] = 0
+	  if not dst in holders: holders[dst] = 0
+	  if dst != zero_address: holders[dst] += val
+	  if src != zero_address: holders[src] -= val
+   #+end_src
+
+   It's important to emphatize how the correctness of these results is
+   only a "condicio sine qua non" and it doesn't grant a perfect
+   implementation.
+   However we consider this a sufficient degree of reliability.
+   
+   To run it:
+   
+   #+begin_src sh
+     python verify_current_buidl_holders.py 
+   #+end_src
+
+   Note that sometimes errors may occurs because there has been a
+   recent transfer that is not available in the ETL table.
+   You can manually check the latest transactions to be sure that this
+   is the case. 
+
+** Get holders for the airdrop
+
+   This script gets the holders of the following tokens:
+
+   - buidl
+   - unifi
+   - etc...
+
+   at the date "2020-01-31 16:20:00 UTC" and create a json containing
+   all their addresses and a fixed amount.
+   Then this output will be used by the distributor contract to
+   airdrop that amount of GIL, upon claim.
+
+   To run it:
+   
+   #+begin_src sh
+     python get_holders_for_airdrop.py 
+   #+end_src
+
+   This produces an ~airdrop.json~ file in the ~results/~ folder.
+   A precomputed output is already present in this repository.
