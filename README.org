@@ -55,10 +55,11 @@
 
    - buidl
    - unifi
-   - etc...
+   - arte
+   - usd
 
-   at the date "2020-01-31 16:20:00 UTC" and create a json containing
-   all their addresses and a fixed amount.
+   at the date "2020-01-31 04:20:00 UTC" and create a json containing
+   all their addresses and a fixed amount of 99 GIL.
    Then this output will be used by the distributor contract to
    airdrop that amount of GIL, upon claim.
 
