@@ -13,7 +13,7 @@ def main():
 
     date = '2021-01-31 04:20:00 UTC'
 
-    reward = 99  # 10 GIL per holder
+    reward = 999  # 10 GIL per holder
     decimals = 18  # GIL token has 18 decimals
 
     holders = set().union(*[set(get_holders(token_address, date).keys()) for token_address in tokens.values()])
