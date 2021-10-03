@@ -1,4 +1,4 @@
-* Materia retro queries
+* Materia retroqueries
   
   This repository collects different scripts to perform queries against
   the Ethereum ETL tables using Google Big Query and perform simple
